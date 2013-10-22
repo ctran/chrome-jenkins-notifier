@@ -10,8 +10,15 @@ function debug(msg) {
 }
 
 function getConfig() {
-	var saved = localStorage[STORAGE_KEY] || '{}';
-	return JSON.parse(saved);
+	var saved = localStorage[STORAGE_KEY];
+	if (saved)
+		return JSON.parse(saved);
+
+	return {
+		viewUrl: viewUrl,
+		checkInterval: checkInterval,
+		notifySuccess: notifySuccess
+	}
 }
 
 function saveConfig(config) {
