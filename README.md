@@ -13,6 +13,7 @@ Requirement
 
 Credits
 ----------------
+Ideas are inspired by @mallowlabs.
 Icons from original [Jenkins](http://jenkins-ci.org/).
 
  * images/icon.png
