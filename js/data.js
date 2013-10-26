@@ -1,7 +1,8 @@
 var STORAGE_KEY = 'jenkins_config';
 
-var viewUrl = 'http://localhost:8080/view/Watch';
-var checkInterval = 60;
+var viewUrl = 'https://localhost:8080/me/my-views';
+var checkInterval = 60;  // in seconds
+var dismissInterval = 10; // in seconds
 var notifySuccess = false;
 var lastResults = {};
 
