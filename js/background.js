@@ -1,3 +1,5 @@
+var IN_PROGRESS = IN_PROGRESS;
+
 function loadOptions() {
 	var config = getConfig();
 
@@ -22,16 +24,20 @@ function showNotification(options) {
 		settings.picture,
 		settings.title,
 		settings.message
-		);
+	);
 
 	notification.onclick = function () {
 		if (settings.url) {
 			window.open(settings.url);
 		}
-		notification.close();
+		notification.cancel();
 	}
 
 	notification.show();
+
+	setTimeout(function() {
+		notification.cancel();
+	}, dismissInterval * 1000);
 }  
 
 function getIcon(result) {
@@ -42,7 +48,7 @@ function getIcon(result) {
 		url = "images/red.png";
 	} else if (result == "ABORTED") {
 		url = "images/grey.png";
-	} else if (result == 'In Progress') {
+	} else if (result == IN_PROGRESS) {
 		url = "images/pending.gif";
 	} else if (result == 'SUCCESS') {
 		url = "images/green.png";
@@ -93,11 +99,14 @@ function checkJobStatus(jobUrl) {
 }
 
 function processBuildResult(data) {
-	var buildStatus = data.result || 'In Progress';
+	var buildStatus = data.result || IN_PROGRESS;
 	var jobUrl = data.url;
 
 	// previously checked
 	if (lastResults[jobUrl] && lastResults[jobUrl].number == data.number)
+		return;
+
+	if (buildStatus == IN_PROGRESS)
 		return;
 
 	if (buildStatus == 'SUCCESS' && !notifySuccess)
