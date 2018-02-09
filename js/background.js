@@ -103,8 +103,11 @@ function processBuildResult(data) {
 	var jobUrl = data.url;
 
 	// previously checked
-	if (lastResults[jobUrl] && lastResults[jobUrl].number == data.number)
+	if (lastResults[jobUrl] && lastResults[jobUrl].number == data.number) {
+		// update the badge color if the build status has changed
+		chrome.browserAction.setBadgeBackgroundColor({color: getColor(buildStatus)});
 		return;
+	}
 
 	if (buildStatus == IN_PROGRESS)
 		return;
